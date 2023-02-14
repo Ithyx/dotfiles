@@ -79,6 +79,7 @@
         "format-linked": "🔗 linked",
         "format-wifi": "  {signalStrength}% ({essid})",
         "format-ethernet": "🌐 plugged-in ({ifname})",
+        "format": "Status unknown...",
         "on-click": "if nmcli radio wifi | grep -q 'enabled'; then nmcli radio wifi off; else nmcli radio wifi on; fi",
         "on-click-right": "nm-connection-editor",
     },
