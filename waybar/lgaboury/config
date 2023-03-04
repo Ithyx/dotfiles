@@ -37,7 +37,8 @@
             "format": {
                 "today": "<b><u>{}</u></b>",
             }
-        }
+        },
+        "on-click": "kalendar"
     },
 
     "pulseaudio": {
