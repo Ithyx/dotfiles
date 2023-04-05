@@ -34,6 +34,8 @@ Plug('LinArcX/telescope-command-palette.nvim')
 
 Plug('lewis6991/gitsigns.nvim')
 
+Plug('kdheepak/lazygit.nvim')
+
 Plug('saecki/crates.nvim', { tag = 'v0.3.0' })
 
 Plug('xiyaowong/nvim-transparent')
@@ -220,6 +222,7 @@ telescope.setup {
         {'Telescope git commits [buffer]', ':lua require"telescope.builtin".git_bcommits()'},
         {'Telescope git commits [global]', ':lua require"telescope.builtin".git_commits()'},
         {'Telescope git status', ':lua require"telescope.builtin".git_status()'},
+        {'Telescope lazygit', ':lua require"telescope".extensions.lazygit.lazygit()'},
       },
     }
   }
@@ -228,6 +231,7 @@ telescope.load_extension('ui-select')
 telescope.load_extension('file_browser')
 telescope.load_extension('command_palette')
 telescope.load_extension('dap')
+telescope.load_extension('lazygit')
 
 local telescope_handlers = require('telescope.builtin')
 vim.lsp.handlers["textDocument/references"] = telescope_handlers.lsp_references
@@ -240,6 +244,10 @@ vim.keymap.set('n', '<C-P>', ':Telescope command_palette<enter>')
 -- Setup Gitsigns
 local gitsigns = require 'gitsigns'
 gitsigns.setup()
+
+-- setup lazygit
+vim.g.lazygit_floating_window_use_plenary = 1
+vim.api.nvim_create_autocmd("BufEnter", {command = ':lua require"lazygit.utils".project_root_dir()'})
 
 -- setup TreeSitter
 require'nvim-treesitter.configs'.setup {
