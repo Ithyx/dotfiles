@@ -207,8 +207,10 @@ telescope.setup {
     file_browser = {theme = 'ivy'},
     command_palette = {
       {'File',
-        {'File browser', ':lua require"telescope".extensions.file_browser.file_browser()'},
         {'Diagnostics', ':Telescope diagnostics'},
+        {'Fuzzy finder', ':Telescope grep_string'},
+        {'File browser', ':Telescope file_browser'},
+        {'Open buffers', ':Telescope buffers'},
       },
       {'Git',
         {'Telescope git stash', ':lua require"telescope.builtin".git_stash()'},
@@ -267,18 +269,4 @@ crates.setup()
 
 -- Setup transparent
 local transparent = require 'transparent'
-transparent.setup({
-  enable = true, -- boolean: enable transparent
-  -- extra_groups = { -- table/string: additional groups that should be cleared
-  --   -- In particular, when you set it to 'all', that means all available groups
-
-  --   -- example of akinsho/nvim-bufferline.lua
-  --   "BufferLineTabClose",
-  --   "BufferlineBufferSelected",
-  --   "BufferLineFill",
-  --   "BufferLineBackground",
-  --   "BufferLineSeparator",
-  --   "BufferLineIndicatorSelected",
-  -- },
-  exclude = {}, -- table: groups you don't want to clear
-})
+transparent.setup({})
