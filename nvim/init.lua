@@ -13,8 +13,10 @@ Plug('ms-jpq/coq_nvim', {branch = 'coq'})
 Plug('ms-jpq/coq.artifacts', {branch = 'artifacts'})
 Plug('ms-jpq/coq.thirdparty', {branch = '3p'})
 
+Plug('nvim-lua/plenary.nvim')
 Plug('kyazdani42/nvim-web-devicons')
-Plug('kyazdani42/nvim-tree.lua')
+Plug('MunifTanjim/nui.nvim')
+Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v2.x" })
 
 Plug('mfussenegger/nvim-dap')
 
@@ -23,12 +25,10 @@ Plug('andweeb/presence.nvim')
 Plug('LucHermitte/lh-vim-lib')
 Plug('LucHermitte/local_vimrc')
 
-Plug('nvim-lua/plenary.nvim')
 Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-telescope/telescope-ui-select.nvim')
 Plug('nvim-telescope/telescope-dap.nvim')
 Plug('nvim-telescope/telescope-file-browser.nvim')
-Plug('kyazdani42/nvim-web-devicons')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 Plug('LinArcX/telescope-command-palette.nvim')
 
@@ -126,10 +126,12 @@ vim.api.nvim_command('autocmd vimenter * ++nested colorscheme gruvbox')
 vim.fn['lh#local_vimrc#munge']('whitelist', vim.env['HOME']..'/dev')
 vim.fn['lh#local_vimrc#munge']('blacklist', vim.env['HOME']..'/tools/nvim-config')
 
--- setup nvim tree
-local nvim_tree = require 'nvim-tree'
-nvim_tree.setup{}
-vim.keymap.set('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>')
+-- setup neo-tree
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+local neotree = require 'neo-tree'
+neotree.setup({
+    popup_border_style = "rounded"
+})
 
 -- add discord rich presence
 local discord = require 'presence'
