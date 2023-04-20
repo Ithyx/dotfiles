@@ -199,8 +199,9 @@ capabilities = coq.lsp_ensure_capabilities(capabilities)
 -- print(vim.inspect(capabilities))
 
 lsp.rust_analyzer.setup(capabilities)
-lsp.angularls.setup(capabilities)
 lsp.clangd.setup(capabilities)
+lsp.angularls.setup(capabilities)
+lsp.tsserver.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
