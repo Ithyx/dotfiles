@@ -7,6 +7,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug('morhetz/gruvbox')
+Plug('catppuccin/nvim', {as = 'catppuccin-mocha'})
 
 Plug('neovim/nvim-lspconfig')
 Plug('ms-jpq/coq_nvim', {branch = 'coq'})
@@ -122,7 +123,8 @@ vim.keymap.set('n', '<F3>', function() dap_widgets.centered_float(dap_widgets.sc
 -- setup theme
 vim.api.nvim_command('set signcolumn=yes')
 vim.api.nvim_command('set number')
-vim.api.nvim_command('autocmd vimenter * ++nested colorscheme gruvbox')
+-- vim.api.nvim_command('autocmd vimenter * ++nested colorscheme gruvbox')
+vim.cmd.colorscheme "catppuccin"
 
 -- whitelist dev to load local vimrc
 vim.fn['lh#local_vimrc#munge']('whitelist', vim.env['HOME']..'/dev')
