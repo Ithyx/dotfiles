@@ -204,6 +204,7 @@ lsp.rust_analyzer.setup(capabilities)
 lsp.clangd.setup(capabilities)
 lsp.angularls.setup(capabilities)
 lsp.tsserver.setup(capabilities)
+lsp.pyright.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
