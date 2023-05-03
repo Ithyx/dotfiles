@@ -9,6 +9,8 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 Plug('morhetz/gruvbox')
 Plug('catppuccin/nvim', {as = 'catppuccin-mocha'})
 
+Plug('williamboman/mason.nvim', { ['do'] = ':MasonUpdate' })
+Plug('williamboman/mason-lspconfig.nvim')
 Plug('neovim/nvim-lspconfig')
 Plug('ms-jpq/coq_nvim', {branch = 'coq'})
 Plug('ms-jpq/coq.artifacts', {branch = 'artifacts'})
@@ -143,22 +145,20 @@ discord:setup({
   neovim_image_text = 'Neovim'
 })
 
--- setup lsp
-local lsp = require 'lspconfig'
-
+-- Setup COQ
 vim.api.nvim_command([[let g:coq_settings = { 'auto_start': 'shut-up' }]])
 local coq = require 'coq'
 
--- Mappings
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+--- Mappings
+--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+--- Use an on_attach function to only map the following keys
+--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
@@ -198,13 +198,29 @@ local capabilities = {
 	}
 }
 capabilities = coq.lsp_ensure_capabilities(capabilities)
--- print(vim.inspect(capabilities))
+--- print(vim.inspect(capabilities))
 
-lsp.rust_analyzer.setup(capabilities)
-lsp.clangd.setup(capabilities)
-lsp.angularls.setup(capabilities)
-lsp.tsserver.setup(capabilities)
-lsp.pyright.setup(capabilities)
+-- Setup Mason
+local mason = require 'mason'
+mason.setup()
+
+-- Setup Mason-LSP bridge
+local mason_lspconfig = require 'mason-lspconfig'
+mason_lspconfig.setup()
+
+local lsp = require 'lspconfig'
+mason_lspconfig.setup_handlers {
+    function (server_name)
+        lsp[server_name].setup(capabilities)
+    end
+}
+
+-- setup lsp (not needed when using mason automatic installation)
+--- lsp.rust_analyzer.setup(capabilities)
+--- lsp.clangd.setup(capabilities)
+--- lsp.angularls.setup(capabilities)
+--- lsp.tsserver.setup(capabilities)
+--- lsp.pyright.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
