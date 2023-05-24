@@ -1,5 +1,5 @@
 local debug = function(_)
-  print('DEBUG REACHED')
+    print('DEBUG REACHED')
 end
 
 local Plug = vim.fn['plug#']
@@ -7,14 +7,14 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug('morhetz/gruvbox')
-Plug('catppuccin/nvim', {as = 'catppuccin-mocha'})
+Plug('catppuccin/nvim', { as = 'catppuccin-mocha' })
 
 Plug('williamboman/mason.nvim', { ['do'] = ':MasonUpdate' })
 Plug('williamboman/mason-lspconfig.nvim')
 Plug('neovim/nvim-lspconfig')
-Plug('ms-jpq/coq_nvim', {branch = 'coq'})
-Plug('ms-jpq/coq.artifacts', {branch = 'artifacts'})
-Plug('ms-jpq/coq.thirdparty', {branch = '3p'})
+Plug('ms-jpq/coq_nvim', { branch = 'coq' })
+Plug('ms-jpq/coq.artifacts', { branch = 'artifacts' })
+Plug('ms-jpq/coq.thirdparty', { branch = '3p' })
 
 Plug('nvim-lua/plenary.nvim')
 Plug('kyazdani42/nvim-web-devicons')
@@ -22,6 +22,8 @@ Plug('MunifTanjim/nui.nvim')
 Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v2.x" })
 
 Plug('mfussenegger/nvim-dap')
+Plug('rcarriga/nvim-dap-ui')
+Plug('jay-babu/mason-nvim-dap.nvim')
 
 Plug('andweeb/presence.nvim')
 
@@ -32,7 +34,7 @@ Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-telescope/telescope-ui-select.nvim')
 Plug('nvim-telescope/telescope-dap.nvim')
 Plug('nvim-telescope/telescope-file-browser.nvim')
-Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('LinArcX/telescope-command-palette.nvim')
 
 Plug('lewis6991/gitsigns.nvim')
@@ -107,20 +109,24 @@ vim.keymap.set('t', '<A-t>', '<C-\\><C-n>:call TermToggle(12)<CR>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
 -- setup DAP
-local dap = require 'dap'
-local dap_widgets = require 'dap.ui.widgets'
-dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode',
-  name = 'lldb'
-}
+local dap_ui = require 'dapui'
+dap_ui.setup()
 
--- DAP mappings
+local dap = require 'dap'
+dap.listeners.after.event_initialized['dapui_config'] = function()
+    dap_ui.open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+    dap_ui.close()
+end
+dap.listeners.before.event_exited['dapui_config'] = function()
+    dap_ui.close()
+end
+
 vim.keymap.set('n', '<F9>', dap.toggle_breakpoint)
 vim.keymap.set('n', '<F5>', dap.continue)
 vim.keymap.set('n', '<F10>', dap.step_over)
 vim.keymap.set('n', '<F11>', dap.step_into)
-vim.keymap.set('n', '<F3>', function() dap_widgets.centered_float(dap_widgets.scopes) end)
 
 -- setup theme
 vim.api.nvim_command('set signcolumn=yes')
@@ -129,8 +135,8 @@ vim.api.nvim_command('set number')
 vim.cmd.colorscheme "catppuccin"
 
 -- whitelist dev to load local vimrc
-vim.fn['lh#local_vimrc#munge']('whitelist', vim.env['HOME']..'/dev')
-vim.fn['lh#local_vimrc#munge']('blacklist', vim.env['HOME']..'/tools/nvim-config')
+vim.fn['lh#local_vimrc#munge']('whitelist', vim.env['HOME'] .. '/dev')
+vim.fn['lh#local_vimrc#munge']('blacklist', vim.env['HOME'] .. '/tools/nvim-config')
 
 -- setup neo-tree
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
@@ -142,7 +148,7 @@ neotree.setup({
 -- add discord rich presence
 local discord = require 'presence'
 discord:setup({
-  neovim_image_text = 'Neovim'
+    neovim_image_text = 'Neovim'
 })
 
 -- Setup COQ
@@ -151,7 +157,7 @@ local coq = require 'coq'
 
 --- Mappings
 --- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
@@ -160,42 +166,41 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 --- Use an on_attach function to only map the following keys
 --- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { buffer = bufnr, noremap = true, silent = true }
+    vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<C-g>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('i', '<C-g>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<C-l>', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { buffer=bufnr, noremap=true, silent=true }
-  vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-g>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('i', '<C-g>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<C-l>', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-
-  vim.keymap.set('n', '<C-s>', function()
-	  vim.lsp.buf.format {{boffopts, async = true}}
-  end, bufopts)
+    vim.keymap.set('n', '<C-s>', function()
+        vim.lsp.buf.format { { boffopts, async = true } }
+    end, bufopts)
 end
 
 local capabilities = {
-	on_attach = on_attach,
-	settings = {
-		["rust-analyzer"] = {
-			checkOnSave = {
-				command = "clippy"
-			}
-		}
-	}
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy"
+            }
+        }
+    }
 }
 capabilities = coq.lsp_ensure_capabilities(capabilities)
 --- print(vim.inspect(capabilities))
@@ -210,42 +215,48 @@ mason_lspconfig.setup()
 
 local lsp = require 'lspconfig'
 mason_lspconfig.setup_handlers {
-    function (server_name)
+    function(server_name)
         lsp[server_name].setup(capabilities)
     end
 }
 
--- setup lsp (not needed when using mason automatic installation)
---- lsp.rust_analyzer.setup(capabilities)
---- lsp.clangd.setup(capabilities)
---- lsp.angularls.setup(capabilities)
---- lsp.tsserver.setup(capabilities)
---- lsp.pyright.setup(capabilities)
+-- Setup Mason-DAP bridge
+local mason_dap = require 'mason-nvim-dap'
+mason_dap.setup({
+    handlers = {
+        function(config)
+            -- all sources with no handler get passed here
+
+            -- Keep original functionality
+            mason_dap.default_setup(config)
+        end
+    },
+})
 
 -- Hook telescope
 local telescope = require 'telescope'
 local telescope_themes = require 'telescope.themes'
 telescope.setup {
-  extensions = {
-    ['ui-select'] = {telescope_themes.get_dropdown {}},
-    file_browser = {theme = 'ivy'},
-    command_palette = {
-      {'File',
-        {'Diagnostics', ':Telescope diagnostics'},
-        {'Fuzzy finder', ':Telescope grep_string'},
-        {'File browser', ':Telescope file_browser'},
-        {'Open buffers', ':Telescope buffers'},
-      },
-      {'Git',
-        {'Telescope git stash', ':lua require"telescope.builtin".git_stash()'},
-        {'Telescope git branches', ':lua require"telescope.builtin".git_branches()'},
-        {'Telescope git commits [buffer]', ':lua require"telescope.builtin".git_bcommits()'},
-        {'Telescope git commits [global]', ':lua require"telescope.builtin".git_commits()'},
-        {'Telescope git status', ':lua require"telescope.builtin".git_status()'},
-        {'Telescope lazygit', ':lua require"telescope".extensions.lazygit.lazygit()'},
-      },
+    extensions = {
+        ['ui-select'] = { telescope_themes.get_dropdown {} },
+        file_browser = { theme = 'ivy' },
+        command_palette = {
+            { 'File',
+                { 'Diagnostics',  ':Telescope diagnostics' },
+                { 'Fuzzy finder', ':Telescope grep_string' },
+                { 'File browser', ':Telescope file_browser' },
+                { 'Open buffers', ':Telescope buffers' },
+            },
+            { 'Git',
+                { 'Telescope git stash',            ':lua require"telescope.builtin".git_stash()' },
+                { 'Telescope git branches',         ':lua require"telescope.builtin".git_branches()' },
+                { 'Telescope git commits [buffer]', ':lua require"telescope.builtin".git_bcommits()' },
+                { 'Telescope git commits [global]', ':lua require"telescope.builtin".git_commits()' },
+                { 'Telescope git status',           ':lua require"telescope.builtin".git_status()' },
+                { 'Telescope lazygit',              ':lua require"telescope".extensions.lazygit.lazygit()' },
+            },
+        }
     }
-  }
 }
 telescope.load_extension('ui-select')
 telescope.load_extension('file_browser')
@@ -267,20 +278,20 @@ gitsigns.setup()
 
 -- setup lazygit
 vim.g.lazygit_floating_window_use_plenary = 1
-vim.api.nvim_create_autocmd("BufEnter", {command = ':lua require"lazygit.utils".project_root_dir()'})
+vim.api.nvim_create_autocmd("BufEnter", { command = ':lua require"lazygit.utils".project_root_dir()' })
 
 -- setup TreeSitter
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
     auto_install = true,
-	ensure_installed = {"rust", "glsl"},
+    ensure_installed = { "rust", "glsl" },
     highlight = {
-	enable = true,
+        enable = true,
     },
     incremental_selection = {
-	enable = true,
+        enable = true,
     },
     indent = {
-	enable = true,
+        enable = true,
     },
 }
 
@@ -290,7 +301,7 @@ vim.filetype.add {
         frag = 'glsl',
         vert = 'glsl',
         comp = 'glsl',
-	}
+    }
 }
 
 -- Setup crates.nvim
