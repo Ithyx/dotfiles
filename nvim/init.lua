@@ -19,6 +19,7 @@ Plug('ms-jpq/coq.thirdparty', { branch = '3p' })
 Plug('nvim-lua/plenary.nvim')
 Plug('kyazdani42/nvim-web-devicons')
 Plug('MunifTanjim/nui.nvim')
+Plug('s1n7ax/nvim-window-picker', { branch = "release/2.0" })
 Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v2.x" })
 
 Plug('mfussenegger/nvim-dap')
@@ -137,6 +138,10 @@ vim.cmd.colorscheme "catppuccin"
 -- whitelist dev to load local vimrc
 vim.fn['lh#local_vimrc#munge']('whitelist', vim.env['HOME'] .. '/dev')
 vim.fn['lh#local_vimrc#munge']('blacklist', vim.env['HOME'] .. '/tools/nvim-config')
+
+-- Setup window picker
+local window_picker = require 'window-picker'
+window_picker.setup()
 
 -- setup neo-tree
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
