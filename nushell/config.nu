@@ -183,7 +183,7 @@ let light_theme = {
 
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
+$env.config = {
   # true or false to enable or disable the welcome banner at startup
   show_banner: false
   ls: {
@@ -542,7 +542,7 @@ let-env config = {
   ]
 }
 
-let-env EDITOR = nvim
+$env.EDITOR = nvim
 
 # Source the oh-myu-posh file generated in env-config
 source ~/.oh-my-posh.nu
