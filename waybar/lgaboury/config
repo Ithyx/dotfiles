@@ -61,12 +61,14 @@
     "cpu": {
         "format": "{}% ",
         "on-click": "kitty htop",
+        "on-click-right": "kitty nvtop",
     },
 
     "memory": {
         "format": "{}% ({used:0.1f}GiB/{total:0.1f}Gib)  ",
         "interval": 10,
         "on-click": "kitty htop",
+        "on-click-right": "kitty nvtop",
     },
 
     "network" : {
