@@ -20,7 +20,7 @@ Plug('nvim-lua/plenary.nvim')
 Plug('kyazdani42/nvim-web-devicons')
 Plug('MunifTanjim/nui.nvim')
 Plug('s1n7ax/nvim-window-picker', { branch = "release/2.0" })
-Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v2.x" })
+Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v3.x" })
 
 Plug('mfussenegger/nvim-dap')
 Plug('rcarriga/nvim-dap-ui')
@@ -55,6 +55,17 @@ vim.api.nvim_command('set shiftwidth=4')
 vim.api.nvim_command('set expandtab')
 vim.api.nvim_command('set autoread')
 vim.api.nvim_command('set termguicolors')
+
+-- custom icons 
+vim.fn.sign_define("DiagnosticSignError",
+  {text = " ", texthl = "DiagnosticSignError"})
+vim.fn.sign_define("DiagnosticSignWarn",
+  {text = " ", texthl = "DiagnosticSignWarn"})
+vim.fn.sign_define("DiagnosticSignInfo",
+  {text = " ", texthl = "DiagnosticSignInfo"})
+vim.fn.sign_define("DiagnosticSignHint",
+  {text = "󰌵", texthl = "DiagnosticSignHint"})
+
 
 -- basic mapping
 vim.keymap.set('n', '<C-C>', ':noh<CR>')
