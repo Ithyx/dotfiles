@@ -32,7 +32,7 @@
                 "today": "<b><u>{}</u></b>",
             }
         },
-        "on-click": "kalendar"
+        "on-click": "merkuro-calendar"
     },
 
     "pulseaudio": {
@@ -60,7 +60,7 @@
 
     "cpu": {
         "format": "{}% ",
-        "on-click": "kitty htop",
+        "on-click": "kitty btop",
         "on-click-right": "kitty nvtop",
     },
 
