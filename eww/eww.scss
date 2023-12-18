@@ -1,0 +1,13 @@
+*{
+	all: unset;
+    font-family: A-TTF Shin Go Pro R;
+}
+
+@import "colors.scss";
+
+/** General **/
+
+/** workspaces **/
+.workspaces {
+    background-color: $bg;
+}

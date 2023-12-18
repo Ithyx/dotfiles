@@ -1,60 +1,38 @@
-(defwindow example
-           :monitor 1
-           :geometry (geometry :x "0%"
-                               :y "20px"
-                               :width "98%"
-                               :height "30px"
-                               :anchor "top center")
-           :stacking "overlay"
-           :exclusive true
-           :focusable false
-
-    (workspaces)
-)
+(include "./hyprland.yuck")
 
 (defwindow bar_main
-           :monitor 1
-           :geometry (geometry :x "0%"
-                               :y "20px"
-                               :width "98%"
-                               :height "30px"
-                               :anchor "top center")
-           :stacking "overlay"
-           :exclusive true
-           :focusable false
+            :class "bar"
+            :monitor 1
+            :geometry (geometry :x "0%"
+                                :y "20px"
+                                :width "98%"
+                                :height "30px"
+                                :anchor "top center")
+            :stacking "overlay"
+            :exclusive true
+            :focusable false
 
-    (workspaces_main)
+    (bar_main)
 )
 
 (defwindow bar_secondary
-           :monitor 0
-           :geometry (geometry :x "0%"
+            :monitor 0
+            :geometry (geometry :x "0%"
                                :y "20px"
                                :width "98%"
                                :height "30px"
                                :anchor "top center")
-           :stacking "overlay"
-           :exclusive true
-           :focusable false
+            :stacking "overlay"
+            :exclusive true
+            :focusable false
 
     (workspaces_secondary)
 )
 
-(deflisten workspace_main "hyprland-workspaces DP-3")
-(deflisten workspace_secondary "hyprland-workspaces DP-1")
-(defwidget workspaces_main []
-  (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
-    (box :class "workspaces"
-      (for i in workspace_main
-        (button
-          :onclick "hyprctl dispatch workspace ${i.id}"
-          :class "${i.class}"
-          "${i.name}")))))
-(defwidget workspaces_secondary []
-  (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
-    (box :class "workspaces"
-      (for i in workspace_secondary
-        (button
-          :onclick "hyprctl dispatch workspace ${i.id}"
-          :class "${i.class}"
-          "${i.name}")))))
+(defwidget bar_main []
+    (box :class "bar"
+
+        (workspaces_main)
+        (current_window_title)
+    )
+)
