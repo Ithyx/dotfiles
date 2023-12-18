@@ -46,6 +46,8 @@ Plug('saecki/crates.nvim', { tag = 'v0.3.0' })
 
 Plug('xiyaowong/nvim-transparent')
 
+Plug('edluffy/hologram.nvim')
+
 vim.call('plug#end')
 
 -- basic settings
@@ -339,3 +341,9 @@ crates.setup()
 -- Setup transparent
 local transparent = require 'transparent'
 transparent.setup({})
+
+-- Setup hologram
+local hologram = require('hologram')
+hologram.setup{
+    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+}
