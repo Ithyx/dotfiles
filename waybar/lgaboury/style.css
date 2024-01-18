@@ -103,10 +103,15 @@ window#waybar.hidden {
     border-radius: 10px;
     transition: none;
     color: #ffffff;
+    background: #383c4a;
 }
 
 #battery.charging {
     background: #0ecae3;
+}
+
+#battery.plugged {
+    background: #0fcbe4;
 }
 
 #battery.warning {
