@@ -1,11 +1,11 @@
+(include "./time.yuck")
 (include "./hyprland.yuck")
 
 (defwindow bar_main
             :class "bar"
             :monitor 1
             :geometry (geometry :x "0%"
-                                :y "20px"
-                                :width "98%"
+                                :width "100%"
                                 :height "30px"
                                 :anchor "top center")
             :stacking "overlay"
@@ -18,21 +18,53 @@
 (defwindow bar_secondary
             :monitor 0
             :geometry (geometry :x "0%"
-                               :y "20px"
-                               :width "98%"
-                               :height "30px"
-                               :anchor "top center")
+                                :width "100%"
+                                :height "30px"
+                                :anchor "top center")
             :stacking "overlay"
             :exclusive true
             :focusable false
 
-    (workspaces_secondary)
+    (bar_secondary)
 )
 
 (defwidget bar_main []
-    (box :class "bar"
+    (centerbox :class "bar"
+         :orientation "horizontal"
 
-        (workspaces_main)
-        (current_window_title)
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "start"
+             :spacing 10
+
+            (workspaces_main)
+        )
+
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "center"
+             :spacing 10
+
+            (current_window_title)
+        )
+
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "end"
+             :spacing 10
+
+            (date-time)
+            (systray :class "module tray" :icon-size 20)
+        )
+    )
+)
+
+(defwidget bar_secondary []
+    (box :class "bar"
+         :orientation "horizontal"
+         :space-evenly true
+
+        (box :halign "start" (workspaces_secondary))
+        (box :halign "center" (current_window_title))
     )
 )
