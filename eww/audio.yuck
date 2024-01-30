@@ -1,0 +1,18 @@
+(defpoll VOLICON :interval "1s" `scripts/sound --icon`)
+(defpoll VOLUME :interval "100ms" `scripts/sound --get`)
+
+(defwidget audio []
+    (box :class "module audio"
+         :width 250
+
+        (scale :min 0
+               :max 100
+               :value VOLUME
+               :onchange "scripts/sound --set {}"
+        )
+        (eventbox
+            :onscroll "scripts/sound --{}"
+            (label :text "${VOLUME}% ${VOLICON}")
+        )
+    )
+)

@@ -1,3 +1,4 @@
+(include "./audio.yuck")
 (include "./time.yuck")
 (include "./hyprland.yuck")
 
@@ -8,7 +9,7 @@
                                 :width "100%"
                                 :height "30px"
                                 :anchor "top center")
-            :stacking "overlay"
+            :stacking "fg"
             :exclusive true
             :focusable false
 
@@ -21,7 +22,7 @@
                                 :width "100%"
                                 :height "30px"
                                 :anchor "top center")
-            :stacking "overlay"
+            :stacking "fg"
             :exclusive true
             :focusable false
 
@@ -53,6 +54,7 @@
              :halign "end"
              :spacing 10
 
+            (audio)
             (date-time)
             (systray :class "module tray" :icon-size 20)
         )
@@ -60,11 +62,32 @@
 )
 
 (defwidget bar_secondary []
-    (box :class "bar"
+    (centerbox :class "bar"
          :orientation "horizontal"
-         :space-evenly true
 
-        (box :halign "start" (workspaces_secondary))
-        (box :halign "center" (current_window_title))
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "start"
+             :spacing 10
+
+            (workspaces_secondary)
+        )
+
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "center"
+             :spacing 10
+
+            (current_window_title)
+        )
+
+        (box :orientation "horizontal"
+             :space-evenly false
+             :halign "end"
+             :spacing 10
+
+            (date-time)
+            (systray :class "module tray" :icon-size 20)
+        )
     )
 )

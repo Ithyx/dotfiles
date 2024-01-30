@@ -1,0 +1,46 @@
+#!/bin/bash
+
+get_volume() {
+    get_command="pactl get-sink-volume @DEFAULT_SINK@ | grep -E -o '[0-9]+%' | head -n 1 | grep -E -o '[0-9]+'"
+    eval "$get_command"
+}
+
+get_icon() {
+    current=$(get_volume)
+    if [[ "$current" -eq "0" ]]; then
+        echo "婢"
+    elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
+        echo "奄"
+    elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
+        echo "奔"
+    elif [[ ("$current" -ge "60") ]]; then
+        echo "墳"
+    fi
+}
+
+raise_volume() {
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+}
+
+lower_volume() {
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+}
+
+set_volume() {
+    set_command="pactl set-sink-volume @DEFAULT_SINK@ $1%"
+    eval "$set_command"
+}
+
+if [[ "$1" == "--get" ]]; then
+	get_volume
+elif [[ "$1" == "--icon" ]]; then
+	get_icon
+elif [[ "$1" == "--up" ]]; then
+	raise_volume
+elif [[ "$1" == "--down" ]]; then
+	lower_volume
+elif [[ "$1" == "--set" ]]; then
+	set_volume $2
+else
+	get_volume
+fi

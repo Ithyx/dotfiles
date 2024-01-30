@@ -6,9 +6,14 @@
 @import "colors.scss";
 
 /** General **/
+.bar_main,
+.bar_secondary {
+    background-color: transparent;
+}
+
 .bar {
-    padding: 0 10px;
-    background-color: $bg;
+    padding: 10px 10px;
+    background-color: rgba($bg, 0.45);
 }
 
 .module {
