@@ -48,6 +48,9 @@ Plug('xiyaowong/nvim-transparent')
 
 Plug('edluffy/hologram.nvim')
 
+Plug('vim-scripts/dbext.vim')
+Plug('kaarmu/typst.vim')
+
 vim.call('plug#end')
 
 -- basic settings
