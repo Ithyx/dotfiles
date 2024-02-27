@@ -1,17 +1,24 @@
 (defpoll VOLICON :interval "1s" `scripts/sound --icon`)
 (defpoll VOLUME :interval "100ms" `scripts/sound --get`)
+(defvar reveal-sound false)
 
 (defwidget audio []
-    (box :class "module audio"
-         :width 250
+    (eventbox :onscroll "scripts/sound --{}"
+              :onhover "eww update reveal-sound=true"
+              :onhoverlost "eww update reveal-sound=false"
 
-        (scale :min 0
-               :max 100
-               :value VOLUME
-               :onchange "scripts/sound --set {}"
-        )
-        (eventbox
-            :onscroll "scripts/sound --{}"
+        (box :class "module audio"
+
+            (revealer :reveal reveal-sound
+                      :transition "slideleft"
+                      :duration "500ms"
+
+                (scale :min 0
+                       :max 100
+                       :value VOLUME
+                       :onchange "scripts/sound --set {}"
+                )
+            )
             (label :text "${VOLUME}% ${VOLICON}")
         )
     )
