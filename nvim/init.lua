@@ -22,6 +22,7 @@ Plug('MunifTanjim/nui.nvim')
 Plug('s1n7ax/nvim-window-picker', { branch = "release/2.0" })
 Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v3.x" })
 
+Plug('nvim-neotest/nvim-nio')
 Plug('mfussenegger/nvim-dap')
 Plug('rcarriga/nvim-dap-ui')
 Plug('jay-babu/mason-nvim-dap.nvim')
