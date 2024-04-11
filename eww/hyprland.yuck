@@ -1,18 +1,8 @@
-(deflisten workspace_main "hyprland-workspaces DP-3")
-(deflisten workspace_secondary "hyprland-workspaces DP-1")
-(defwidget workspaces_main []
+(deflisten workspace "hyprland-workspaces eDP-1")
+(defwidget workspaces []
   (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
     (box :class "module workspaces"
-      (for i in workspace_main
-        (button
-          :onclick "hyprctl dispatch workspace ${i.id}"
-          :class "${i.class}"
-          :width 25
-          "${i.name}")))))
-(defwidget workspaces_secondary []
-  (eventbox :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/\' | sed 's/down/-/'`1"
-    (box :class "module workspaces"
-      (for i in workspace_secondary
+      (for i in workspace
         (button
           :onclick "hyprctl dispatch workspace ${i.id}"
           :class "${i.class}"

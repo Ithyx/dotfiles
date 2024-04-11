@@ -2,21 +2,8 @@
 (include "./time.yuck")
 (include "./hyprland.yuck")
 
-(defwindow bar_main
+(defwindow bar
             :class "bar"
-            :monitor 1
-            :geometry (geometry :x "0%"
-                                :width "100%"
-                                :height "30px"
-                                :anchor "top center")
-            :stacking "fg"
-            :exclusive true
-            :focusable false
-
-    (bar_main)
-)
-
-(defwindow bar_secondary
             :monitor 0
             :geometry (geometry :x "0%"
                                 :width "100%"
@@ -26,10 +13,10 @@
             :exclusive true
             :focusable false
 
-    (bar_secondary)
+    (bar)
 )
 
-(defwidget bar_main []
+(defwidget bar []
     (centerbox :class "bar"
          :orientation "horizontal"
 
@@ -38,7 +25,7 @@
              :halign "start"
              :spacing 10
 
-            (workspaces_main)
+            (workspaces)
         )
 
         (box :orientation "horizontal"
@@ -55,37 +42,6 @@
              :spacing 10
 
             (audio)
-            (date-time)
-            (systray :class "module tray" :icon-size 20)
-        )
-    )
-)
-
-(defwidget bar_secondary []
-    (centerbox :class "bar"
-         :orientation "horizontal"
-
-        (box :orientation "horizontal"
-             :space-evenly false
-             :halign "start"
-             :spacing 10
-
-            (workspaces_secondary)
-        )
-
-        (box :orientation "horizontal"
-             :space-evenly false
-             :halign "center"
-             :spacing 10
-
-            (current_window_title)
-        )
-
-        (box :orientation "horizontal"
-             :space-evenly false
-             :halign "end"
-             :spacing 10
-
             (date-time)
             (systray :class "module tray" :icon-size 20)
         )
