@@ -1,0 +1,8 @@
+(defpoll TIME :interval "5s" `date +\"%H:%M\"`)
+(defpoll DATE :interval "5s" `date +\"%d-%m-%Y\"`)
+
+(defwidget date-time []
+    (box :class "module date-time"
+        (label :text "${TIME} | ${DATE}")
+    )
+)

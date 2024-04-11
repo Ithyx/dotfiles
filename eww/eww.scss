@@ -1,0 +1,70 @@
+* {
+    font-family: A-TTF Shin Go Pro R;
+    // font-family: JetBrainsMono Nerd Font Mono
+}
+
+@import "colors.scss";
+
+/** General **/
+.bar_main,
+.bar_secondary {
+    background-color: transparent;
+}
+
+.bar {
+    padding: 8px 10px;
+    background-color: rgba($bg, 0.45);
+}
+
+.module {
+    border-radius: 6px;
+    margin: 0px 5px 0px 5px;
+    padding: 1px 10px 1px 10px;
+    background-color: $black;
+}
+
+tooltip {
+    background-color: $black;
+    border-radius: 6px;
+}
+
+scale {
+    all: unset;
+    background-color: transparent;
+    min-height: 5px;
+    min-width: 100px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+/** workspaces **/
+.workspaces {
+    padding: 2px;
+    background-color: $purple;
+}
+
+.workspace-button {
+    // I'd like to put this at the glob, but it would erase systray theme
+    all: unset;
+
+    color: $black;
+}
+
+.workspace-active {
+    background: $black;
+    border-radius: 6px;
+    color: $purple;
+    font-weight: bold;
+}
+
+/** window title **/
+.window-title {
+    color: $black;
+    background-color: $blue;
+}
+
+/** time **/
+.date-time {
+    color: $black;
+    background-color: $pink;
+}
