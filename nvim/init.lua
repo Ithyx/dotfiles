@@ -62,21 +62,23 @@ vim.api.nvim_command('set expandtab')
 vim.api.nvim_command('set autoread')
 vim.api.nvim_command('set termguicolors')
 
--- custom icons 
+-- custom icons
 vim.fn.sign_define("DiagnosticSignError",
-  {text = " ", texthl = "DiagnosticSignError"})
+    { text = " ", texthl = "DiagnosticSignError" })
 vim.fn.sign_define("DiagnosticSignWarn",
-  {text = " ", texthl = "DiagnosticSignWarn"})
+    { text = " ", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo",
-  {text = " ", texthl = "DiagnosticSignInfo"})
+    { text = " ", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint",
-  {text = "󰌵", texthl = "DiagnosticSignHint"})
+    { text = "󰌵", texthl = "DiagnosticSignHint" })
 
 
 -- basic mapping
 vim.keymap.set('n', '<C-C>', ':noh<CR>')
 vim.keymap.set('n', '<A-Left>', '<C-o>')
 vim.keymap.set('n', '<A-Right>', '<C-I>')
+vim.keymap.set('n', '<C-Down>', 'gj')
+vim.keymap.set('n', '<C-Up>', 'gk')
 
 -- setup terminal mode
 vim.api.nvim_command([[
@@ -264,11 +266,11 @@ telescope.setup {
         file_browser = { theme = 'ivy' },
         command_palette = {
             { 'File',
-                { 'Open buffers', ':Telescope buffers' },
-                { 'File browser', ':Telescope file_browser' },
+                { 'Open buffers',  ':Telescope buffers' },
+                { 'File browser',  ':Telescope file_browser' },
                 { 'Symbol search', ':lua require"telescope.builtin".lsp_workspace_symbols()' },
                 { 'Global search', ':lua require"telescope.builtin".live_grep()' },
-                { 'Diagnostics',  ':Telescope diagnostics' },
+                { 'Diagnostics',   ':Telescope diagnostics' },
             },
             { 'Git',
                 { 'Telescope git stash',            ':lua require"telescope.builtin".git_stash()' },
@@ -321,12 +323,12 @@ require 'nvim-treesitter.configs'.setup {
 --- Add nu parser
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.nu = {
-  install_info = {
-    url = "https://github.com/nushell/tree-sitter-nu",
-    files = { "src/parser.c" },
-    branch = "main",
-  },
-  filetype = "nu",
+    install_info = {
+        url = "https://github.com/nushell/tree-sitter-nu",
+        files = { "src/parser.c" },
+        branch = "main",
+    },
+    filetype = "nu",
 }
 
 -- setup some extensions
@@ -348,6 +350,6 @@ transparent.setup({})
 
 -- Setup hologram
 local hologram = require('hologram')
-hologram.setup{
+hologram.setup {
     auto_display = true -- WIP automatic markdown image display, may be prone to breaking
 }
