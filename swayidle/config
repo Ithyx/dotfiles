@@ -1,0 +1,2 @@
+timeout 120 "makoctl set-mode away" resume "makoctl set-mode default"
+

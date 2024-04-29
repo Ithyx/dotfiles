@@ -1,0 +1,33 @@
+# Bindings
+on-button-middle=exec makoctl menu -n "$id" wofi -d -p 'Select action: '
+
+# Gemoetry
+layer=overlay
+width=500
+height=300
+max-icon-size=160
+
+anchor=bottom-left
+output=DP-3
+
+# Style
+text-alignment=center
+
+# Timing
+default-timeout=5000
+
+# Colors
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#89b4fa
+progress-color=over #313244
+
+# Urgent notifications
+[urgency=high]
+border-color=#fab387
+default-timeout=0
+
+# When idle
+[mode=away]
+default-timeout=0
+ignore-timeout=1
