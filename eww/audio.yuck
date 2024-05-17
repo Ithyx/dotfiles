@@ -9,16 +9,16 @@
 
         (box :class "module audio"
 
-            (revealer :reveal reveal-sound
-                      :transition "slideleft"
-                      :duration "500ms"
-
-                (scale :min 0
-                       :max 100
-                       :value VOLUME
-                       :onchange "scripts/sound --set {}"
-                )
-            )
+;            (revealer :reveal reveal-sound
+;                      :transition "crossfade"
+;                      :duration "500ms"
+;
+;                (scale :min 0
+;                       :max 100
+;                       :value VOLUME
+;                       :onchange "scripts/sound --set {}"
+;                )
+;            )
             (label :text "${VOLUME}% ${VOLICON}")
         )
     )
