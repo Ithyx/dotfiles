@@ -347,6 +347,9 @@ crates.setup()
 -- Setup transparent
 local transparent = require 'transparent'
 transparent.setup({})
+transparent.clear_prefix('BufferLine')
+transparent.clear_prefix('NeoTree')
+transparent.clear_prefix('lualine')
 
 -- Setup hologram
 local hologram = require('hologram')
