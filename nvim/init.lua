@@ -1,6 +1,10 @@
-local debug = function(_)
-    print('DEBUG REACHED')
-end
+vim.cmd([[
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+]])
 
 local Plug = vim.fn['plug#']
 
@@ -9,12 +13,16 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 Plug('morhetz/gruvbox')
 Plug('catppuccin/nvim', { as = 'catppuccin-mocha' })
 
-Plug('williamboman/mason.nvim', { ['do'] = ':MasonUpdate' })
-Plug('williamboman/mason-lspconfig.nvim')
+Plug('VonHeikemen/lsp-zero.nvim')
 Plug('neovim/nvim-lspconfig')
-Plug('ms-jpq/coq_nvim', { branch = 'coq' })
-Plug('ms-jpq/coq.artifacts', { branch = 'artifacts' })
-Plug('ms-jpq/coq.thirdparty', { branch = '3p' })
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('hrsh7th/cmp-buffer')
+Plug('hrsh7th/cmp-path')
+Plug('hrsh7th/cmp-cmdline')
+Plug('hrsh7th/nvim-cmp')
+
+Plug('L3MON4D3/LuaSnip')
+Plug('saadparwaiz1/cmp_luasnip')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('kyazdani42/nvim-web-devicons')
@@ -25,7 +33,6 @@ Plug('nvim-neo-tree/neo-tree.nvim', { branch = "v3.x" })
 Plug('nvim-neotest/nvim-nio')
 Plug('mfussenegger/nvim-dap')
 Plug('rcarriga/nvim-dap-ui')
-Plug('jay-babu/mason-nvim-dap.nvim')
 
 Plug('andweeb/presence.nvim')
 
@@ -175,17 +182,53 @@ discord:setup({
     neovim_image_text = 'Neovim'
 })
 
--- Setup COQ
-vim.api.nvim_command([[let g:coq_settings = { 'auto_start': 'shut-up' }]])
-local coq = require 'coq'
+-- setup nvim_cmp
+local cmp = require'cmp'
 
---- Mappings
---- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  }),
+  matching = { disallow_symbol_nonprefix_matching = false }
+})
 
 --- Use an on_attach function to only map the following keys
 --- after the language server attaches to the current buffer
@@ -217,6 +260,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
     on_attach = on_attach,
     settings = {
         ["rust-analyzer"] = {
@@ -224,38 +268,24 @@ local capabilities = {
                 command = "clippy"
             }
         }
-    }
-}
-capabilities = coq.lsp_ensure_capabilities(capabilities)
---- print(vim.inspect(capabilities))
-
--- Setup Mason
-local mason = require 'mason'
-mason.setup()
-
--- Setup Mason-LSP bridge
-local mason_lspconfig = require 'mason-lspconfig'
-mason_lspconfig.setup()
-
-local lsp = require 'lspconfig'
-mason_lspconfig.setup_handlers {
-    function(server_name)
-        lsp[server_name].setup(capabilities)
-    end
-}
-
--- Setup Mason-DAP bridge
-local mason_dap = require 'mason-nvim-dap'
-mason_dap.setup({
-    handlers = {
-        function(config)
-            -- all sources with no handler get passed here
-
-            -- Keep original functionality
-            mason_dap.default_setup(config)
-        end
     },
-})
+}
+
+--- Mappings
+--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+-- Setup LSP-zero
+local lsp_zero = require('lsp-zero')
+local lspconfig = require('lspconfig')
+
+lspconfig.rust_analyzer.setup(capabilities)
+lspconfig.ccls.setup(capabilities)
+lspconfig.angularls.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
