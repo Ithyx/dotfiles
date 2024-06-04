@@ -28,7 +28,7 @@
 		"spacing": 10
 	},
     "clock": {
-        "format": "{:  %I:%M %p   %d/%m/%Y}"
+        "format": "{:  %I:%M %p  󰃮 %d/%m/%Y}"
     },
     "cpu": {
         "interval": 15,
@@ -47,7 +47,7 @@
         "max-length": 20,
         "format-icons": {
             "spotify": " ",
-            "default": " "
+            "default": "󰎆 "
         },
         "escape": true,
         "on-click": "playerctl play-pause"
