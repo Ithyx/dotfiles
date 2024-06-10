@@ -34,7 +34,7 @@ Plug('nvim-neotest/nvim-nio')
 Plug('mfussenegger/nvim-dap')
 Plug('rcarriga/nvim-dap-ui')
 
-Plug('andweeb/presence.nvim')
+Plug('IogaMaster/neocord')
 
 Plug('LucHermitte/lh-vim-lib')
 Plug('LucHermitte/local_vimrc')
@@ -200,9 +200,18 @@ neotree.setup({
 })
 
 -- add discord rich presence
-local discord = require 'presence'
-discord:setup({
-    neovim_image_text = 'Neovim'
+--- local discord = require 'presence'
+--- discord:setup({
+---     neovim_image_text = 'Neovim',
+---     log_level = 'debug'
+--- })
+local discord = require 'neocord'
+discord.setup({
+    file_assets = {
+        glsl = {"glsl", "glsl"},
+        frag = {"glsl", "glsl"},
+        vert = {"glsl", "glsl"},
+    }
 })
 
 -- setup nvim_cmp
@@ -309,6 +318,7 @@ local lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup(capabilities)
 lspconfig.ccls.setup(capabilities)
 lspconfig.angularls.setup(capabilities)
+lspconfig.glslls.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
