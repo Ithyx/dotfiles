@@ -78,9 +78,9 @@
             "critical": 15
         },
         "format": "{icon}  {capacity}%",
-        "format-charging": "{icon}󱐋 {capacity}%",
-        "format-plugged": "󰂄  100%",
         "format-full": "󰁹  100%",
+        "format-charging": "{icon}󱐋 {capacity}%",
+        "format-plugged": "󰁹󱐋 100%",
         "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂"]
     },
 
