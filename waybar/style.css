@@ -20,6 +20,7 @@ window#waybar.hidden {
     /* animation: gradient 20s ease infinite; */
     color: #000000;
     margin-left: 8px;
+    margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 10px;
@@ -72,6 +73,8 @@ window#waybar.hidden {
 
 
 #clock {
+    margin-left: 8px;
+    margin-right: 8px;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 10px;
@@ -113,6 +116,37 @@ window#waybar.hidden {
     transition: none;
     color: #ffffff;
     background: #383c4a;
+}
+
+#battery {
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 10px;
+    transition: none;
+    color: #ffffff;
+    background: #383c4a;
+}
+
+#battery.charging {
+    background: #0dc1d9;
+}
+
+#battery.plugged {
+    background: #7930c2;
+}
+
+#battery.full {
+    background: #7930c2;
+}
+
+#battery.warning {
+    background: #fafa00;
+}
+
+#battery.critical {
+    background: #e03910;
 }
 
 #network {
