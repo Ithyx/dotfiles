@@ -142,7 +142,7 @@ window#waybar.hidden {
 }
 
 #battery.warning {
-    background: #fafa00;
+    background: #d9670b;
 }
 
 #battery.critical {
