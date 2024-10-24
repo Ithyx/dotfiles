@@ -54,10 +54,10 @@ Plug('saecki/crates.nvim', { tag = 'v0.3.0' })
 
 Plug('xiyaowong/nvim-transparent')
 
-Plug('edluffy/hologram.nvim')
-
 Plug('vim-scripts/dbext.vim')
 Plug('kaarmu/typst.vim')
+
+Plug('nvim-lualine/lualine.nvim')
 
 vim.call('plug#end')
 
@@ -410,12 +410,15 @@ crates.setup()
 -- Setup transparent
 local transparent = require 'transparent'
 transparent.setup({})
-transparent.clear_prefix('BufferLine')
 transparent.clear_prefix('NeoTree')
-transparent.clear_prefix('lualine')
+-- transparent.clear_prefix('lualine')
 
--- Setup hologram
-local hologram = require('hologram')
-hologram.setup {
-    auto_display = true -- WIP automatic markdown image display, may be prone to breaking
+-- Setup lualine
+local lualine = require 'lualine'
+lualine.setup {
+    options = {
+        theme = 'wombat'
+    },
+    extensions = {'neo-tree', 'toggleterm'}
 }
+
