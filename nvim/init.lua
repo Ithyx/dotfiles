@@ -419,6 +419,12 @@ lualine.setup {
     options = {
         theme = 'wombat'
     },
+    sections = {
+        lualine_c = { { 'filename', file_status = true, path = 1 } }
+    },
+    inactive_sections = {
+        lualine_c = { { 'filename', file_status = true, path = 1 } }
+    },
     extensions = {'neo-tree', 'toggleterm'}
 }
 
