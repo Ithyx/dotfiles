@@ -300,8 +300,10 @@ local lspconfig = require('lspconfig')
 
 lspconfig.rust_analyzer.setup(capabilities)
 lspconfig.ccls.setup(capabilities)
+lspconfig.ts_ls.setup(capabilities)
 lspconfig.angularls.setup(capabilities)
 lspconfig.glslls.setup(capabilities)
+lspconfig.jedi_language_server.setup(capabilities)
 
 -- Hook telescope
 local telescope = require 'telescope'
