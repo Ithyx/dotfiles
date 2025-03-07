@@ -320,6 +320,10 @@ telescope.setup {
                 { 'Global search', ':lua require"telescope.builtin".live_grep()' },
                 { 'Diagnostics',   ':Telescope diagnostics' },
             },
+            { 'Correct',
+                { 'Correct word under cursor',              ':lua require"telescope.builtin".spell_suggest()' },
+                { 'Enable correction',                      ':setlocal spell spelllang=fr,en' },
+            },
             { 'Git',
                 { 'Telescope git stash',            ':lua require"telescope.builtin".git_stash()' },
                 { 'Telescope git branches',         ':lua require"telescope.builtin".git_branches()' },
@@ -342,6 +346,8 @@ vim.lsp.handlers["textDocument/references"] = telescope_handlers.lsp_references
 vim.lsp.handlers["textDocument/definition"] = telescope_handlers.lsp_definitions
 vim.lsp.handlers["textDocument/typeDefinition"] = telescope_handlers.lsp_type_definitions
 vim.lsp.handlers["textDocument/implementation"] = telescope_handlers.lsp_implementations
+
+vim.keymap.set('n', 'z=', ':lua require"telescope.builtin".spell_suggest()<enter>')
 
 vim.keymap.set('n', '<C-P>', ':Telescope command_palette<enter>')
 
