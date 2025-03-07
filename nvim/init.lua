@@ -34,8 +34,6 @@ Plug('nvim-neotest/nvim-nio')
 Plug('mfussenegger/nvim-dap')
 Plug('rcarriga/nvim-dap-ui')
 
-Plug('IogaMaster/neocord')
-
 Plug('LucHermitte/lh-vim-lib')
 Plug('LucHermitte/local_vimrc')
 
@@ -197,21 +195,6 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 local neotree = require 'neo-tree'
 neotree.setup({
     popup_border_style = "rounded"
-})
-
--- add discord rich presence
---- local discord = require 'presence'
---- discord:setup({
----     neovim_image_text = 'Neovim',
----     log_level = 'debug'
---- })
-local discord = require 'neocord'
-discord.setup({
-    file_assets = {
-        glsl = {"glsl", "glsl"},
-        frag = {"glsl", "glsl"},
-        vert = {"glsl", "glsl"},
-    }
 })
 
 -- setup nvim_cmp
