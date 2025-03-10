@@ -44,6 +44,8 @@ Plug('nvim-telescope/telescope-file-browser.nvim')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('LinArcX/telescope-command-palette.nvim')
 
+Plug('rcarriga/nvim-notify')
+
 Plug('lewis6991/gitsigns.nvim')
 
 Plug('kdheepak/lazygit.nvim')
@@ -320,6 +322,9 @@ telescope.setup {
                 { 'Global search', ':lua require"telescope.builtin".live_grep()' },
                 { 'Diagnostics',   ':Telescope diagnostics' },
             },
+            { 'Notifications',
+                { 'View past notifications',    ':Telescope notify' },
+            },
             { 'Correct',
                 { 'Correct word under cursor',              ':lua require"telescope.builtin".spell_suggest()' },
                 { 'Enable correction',                      ':setlocal spell spelllang=fr,en' },
@@ -350,6 +355,12 @@ vim.lsp.handlers["textDocument/implementation"] = telescope_handlers.lsp_impleme
 vim.keymap.set('n', 'z=', ':lua require"telescope.builtin".spell_suggest()<enter>')
 
 vim.keymap.set('n', '<C-P>', ':Telescope command_palette<enter>')
+
+-- setup nvim-notify
+vim.notify = require 'notify'
+vim.notify.setup {
+    background_colour = "#000000"
+}
 
 -- Setup Gitsigns
 local gitsigns = require 'gitsigns'
