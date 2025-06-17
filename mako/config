@@ -1,5 +1,5 @@
 # Bindings
-on-button-middle=exec makoctl menu -n "$id" wofi -d -p 'Select action: '
+on-button-middle=exec makoctl menu -n "$id" -- wofi -d -p 'Select action: '
 
 # Gemoetry
 layer=overlay
