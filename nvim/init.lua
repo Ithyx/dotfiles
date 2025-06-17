@@ -355,6 +355,7 @@ vim.lsp.handlers["textDocument/implementation"] = telescope_handlers.lsp_impleme
 vim.keymap.set('n', 'z=', ':lua require"telescope.builtin".spell_suggest()<enter>')
 
 vim.keymap.set('n', '<C-P>', ':Telescope command_palette<enter>')
+vim.keymap.set('n', '<A-g>', ':lua require"telescope".extensions.lazygit.lazygit()<enter>')
 
 -- setup nvim-notify
 vim.notify = require 'notify'
