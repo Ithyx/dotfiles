@@ -6,7 +6,7 @@ return {
         version = "*",
         init = function()
             vim.keymap.set(
-                { "n", "t" },
+                { "n" },
                 "th",
                 '<Cmd>execute v:count . "ToggleTerm direction=horizontal"<CR>',
                 {
@@ -23,7 +23,7 @@ return {
                     silent = true,
                 })
             vim.keymap.set(
-                { "n", "t" },
+                { "n" },
                 "tv",
                 '<Cmd>execute v:count . "ToggleTerm direction=vertical"<CR>',
                 {
@@ -40,7 +40,7 @@ return {
                     silent = true,
                 })
             vim.keymap.set(
-                { "n", "t" },
+                { "n" },
                 "tf",
                 '<Cmd>execute v:count . "ToggleTerm direction=float"<CR>',
                 {
