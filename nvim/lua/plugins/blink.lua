@@ -27,9 +27,9 @@ return {
             --
             -- See :h blink-cmp-config-keymap for defining your own keymap
             keymap = {
-                preset = 'default'
+                preset = 'default',
 
-
+                ['<S-CR>'] = { 'select_and_accept' },
             },
 
             appearance = {

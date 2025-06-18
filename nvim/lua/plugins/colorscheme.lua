@@ -13,7 +13,26 @@ return {
         end
     },
     {
-        "xiyaowong/transparent.nvim", name = "transparent", lazy = false
+        "xiyaowong/transparent.nvim",
+        name = "transparent",
+        lazy = false,
     },
     { "nvim-tree/nvim-web-devicons", opts = {} },
+    { "lewis6991/gitsigns.nvim",     opts = {} },
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        opts = {
+            options = {
+                theme = 'catppuccin'
+            },
+            sections = {
+                lualine_c = { { 'filename', file_status = true, path = 1 } }
+            },
+            inactive_sections = {
+                lualine_c = { { 'filename', file_status = true, path = 1 } }
+            },
+            extensions = { 'toggleterm' }
+        }
+    }
 }
