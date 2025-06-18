@@ -56,7 +56,8 @@ return {
                     return vim.o.columns * 0.3
                 end
             end,
-            shade_terminals = false,
+            -- uncomment this to make it transparent
+            -- shade_terminals = false,
         },
     }
 }
