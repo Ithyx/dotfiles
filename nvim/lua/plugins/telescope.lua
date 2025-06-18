@@ -9,5 +9,11 @@ return {
             mode = "",
             desc = "global fuzzy search",
         },
+        {
+            "<A-b>",
+            require("telescope.builtin").buffers,
+            mode = "",
+            desc = "list buffers",
+        },
     },
 }
