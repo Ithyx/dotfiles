@@ -19,6 +19,16 @@ return {
                 "<A-d>",
                 builtin.diagnostics
             )
+
+            vim.lsp.config("rust_analyzer", {
+                settings = {
+                    ["rust-analyzer"] = {
+                        check = {
+                            command = "clippy"
+                        }
+                    }
+                }
+            })
         end,
         keys = {
             {
@@ -42,7 +52,7 @@ return {
                 mode = "",
                 desc = "Code actions",
             },
-        }
+        },
     },
     {
         "nvim-treesitter/nvim-treesitter",
