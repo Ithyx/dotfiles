@@ -14,8 +14,7 @@ return {
         ---@module 'avante'
         ---@type avante.Config
         opts = {
-            -- add any opts here
-            -- for example
+            mode = "legacy",
             provider = "claude",
             providers = {
                 claude = {
