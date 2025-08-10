@@ -29,6 +29,11 @@ return {
                     }
                 }
             })
+            vim.lsp.config("tinymist", {
+                settings = {
+                    formatterMode = "typstyle",
+                }
+            })
         end,
         keys = {
             {
@@ -84,5 +89,9 @@ return {
             "neovim/nvim-lspconfig",
             "mason-org/mason.nvim",
         }
+    },
+    {
+        'fei6409/log-highlight.nvim',
+        opts = {},
     },
 }
