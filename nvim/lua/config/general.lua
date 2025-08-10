@@ -37,3 +37,6 @@ vim.fn.sign_define("DiagnosticSignInfo",
     { text = " ", texthl = "DiagnosticSignInfo", numhl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint",
     { text = "󰌵", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
+
+-- allow for project based config
+vim.o.exrc = true
