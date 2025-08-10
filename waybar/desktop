@@ -26,7 +26,7 @@
     "clock": {
         "locale": "fr_FR.UTF-8",
         "tooltip-format": "<big>{:%Y %B}</big>\n<small>{calendar}</small>",
-        "format": "{:%H:%M | %d-%m-%Y}",
+        "format": "{:%H:%M | %d日%m月%Y年}",
         "calendar": {
             "format": {
                 "today": "<b><u>{}</u></b>",
