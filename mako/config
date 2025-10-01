@@ -7,7 +7,7 @@ width=500
 height=300
 max-icon-size=160
 
-anchor=bottom-left
+anchor=top-right
 output=DP-3
 
 # Style
