@@ -40,3 +40,6 @@ vim.fn.sign_define("DiagnosticSignHint",
 
 -- allow for project based config
 vim.o.exrc = true
+
+-- clear all marks on start
+vim.cmd.delmarks("A-Z0-9")
