@@ -112,6 +112,24 @@ environment {
     position x=1280 y=0
 }
 
+output "eDP-2" {
+    // Uncomment this line to disable this output.
+    // off
+
+    // Resolution and, optionally, refresh rate of the output.
+    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
+    // If the refresh rate is omitted, niri will pick the highest refresh rate
+    // for the resolution.
+    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
+    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
+    mode "2560x1600@165.000"
+
+    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
+    scale 1.33
+
+    transform "normal"
+}
+
 output "HDMI-A-1" {
     // mode "2560x1440@119.998"
     mode "3840x2160@119.880"
