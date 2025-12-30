@@ -428,7 +428,7 @@ window-rule {
     match app-id="zen|firefox|google-chrome"
 
     open-on-workspace "browser"
-    open-maximized true
+    open-maximized-to-edges true
 }
 window-rule {
     match app-id="zen|firefox|google-chrome" title="拡張機能: (Bitwarden パスワードマネージャー) - Bitwarden — Zen Browser"
@@ -464,7 +464,7 @@ window-rule {
     default-column-width { proportion 0.66667; }
 }
 window-rule {
-    match app-id="Spotify"
+    match app-id="spotify"
     match app-id="vesktop"
 
     open-on-workspace "comms"
@@ -472,7 +472,7 @@ window-rule {
 
 /// GAMES
 window-rule {
-    match app-id="^mpv$"
+    // match app-id="^mpv$"
     match app-id="^steam_app_252950$" // rocket league
     match app-id="^ffxiv_dx11.exe$"
 
@@ -506,8 +506,8 @@ layer-rule {
 
 // noctalia
 layer-rule {
-    match namespace="^quickshell-overview$"
-    place-within-backdrop true
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
 }
 debug {
     honor-xdg-activation-with-invalid-serial
@@ -731,11 +731,12 @@ binds {
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
     Mod+F { maximize-column; }
+    Mod+Ctrl+F { maximize-window-to-edges; }
     Mod+Shift+F { fullscreen-window; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
-    Mod+Ctrl+F { expand-column-to-available-width; }
+    // Mod+Ctrl+F { expand-column-to-available-width; }
 
     Mod+Z { center-column; }
 
