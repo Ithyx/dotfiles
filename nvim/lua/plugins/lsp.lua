@@ -62,6 +62,7 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
+        branch = "main",
 		build = ":TSUpdate",
 		init = function()
 			vim.filetype.add({
@@ -74,13 +75,29 @@ return {
 		end,
 		config = function()
 			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup({
-				auto_install = true,
-				ensure_installed = { "c", "lua", "rust" },
-				highlight = { enable = true },
-				incremental_selection = { enable = true },
-				indent = { enable = true },
+            local ts = require("nvim-treesitter")
+            local parsers = { "c", "lua", "rust" }
 
+            for _, parser in ipairs(parsers) do
+                pcall(ts.install, parser)
+            end
+
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function()
+                    pcall(vim.treesitter.start)
+                end,
+            })
+			-- require("nvim-treesitter.configs").setup({
+			-- 	auto_install = true,
+			-- 	ensure_installed = { "c", "lua", "rust" },
+			-- 	highlight = { enable = true },
+			-- 	incremental_selection = { enable = true },
+			-- 	indent = { enable = true },
+			-- })
+		end,
+	},
+    -- TODO: readd when udpated
+    --[[
 				textobjects = {
 					select = {
 						enable = true,
@@ -123,10 +140,9 @@ return {
 						-- include_surrounding_whitespace = true,
 					},
 				},
-			})
-		end,
-	},
-	{ "nvim-treesitter/nvim-treesitter-textobjects" },
+    --]]
+    -- nvim-treesitter.configs' does not exist
+    -- { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter.configs" } },
 	{ "mason-org/mason.nvim", opts = {} },
 	{
 		"mason-org/mason-lspconfig.nvim",
