@@ -316,6 +316,7 @@ layout {
 // spawn-sh-at-startup "wl-paste --type image --watch cliphist store #Stores only image data"
 
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "swayidle"
 
 spawn-sh-at-startup "mkdir /tmp/manga_ocr"
 spawn-sh-at-startup "manga_ocr /tmp/manga_ocr"
