@@ -8,13 +8,13 @@ return {
     keys = {
         {
             "<A-f>",
-            require("telescope.builtin").live_grep,
+            function() require("telescope.builtin").live_grep() end,
             mode = "",
             desc = "global fuzzy search",
         },
         {
             "<A-b>",
-            require("telescope.builtin").buffers,
+            function() require("telescope.builtin").buffers() end,
             mode = "",
             desc = "list buffers",
         },
