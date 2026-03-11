@@ -315,6 +315,8 @@ layout {
 // spawn-sh-at-startup "wl-paste --type text --watch cliphist store #Stores only text data"
 // spawn-sh-at-startup "wl-paste --type image --watch cliphist store #Stores only image data"
 
+spawn-sh-at-startup "qs -c noctalia-shell"
+
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "swayidle"
 
@@ -746,6 +748,7 @@ binds {
     Mod+F { maximize-column; }
     Mod+Ctrl+F { maximize-window-to-edges; }
     Mod+Shift+F { fullscreen-window; }
+    XF86Tools { fullscreen-window; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
