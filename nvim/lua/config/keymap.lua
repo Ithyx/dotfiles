@@ -5,3 +5,6 @@ vim.keymap.set('n', '<C-Down>', 'gj')
 vim.keymap.set('n', '<C-Up>', 'gk')
 
 vim.keymap.set('n', '<C-d>', vim.diagnostic.open_float)
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
