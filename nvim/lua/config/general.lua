@@ -4,6 +4,9 @@ vim.api.nvim_command('set shiftwidth=4')
 vim.api.nvim_command('set expandtab')
 vim.api.nvim_command('set autoread')
 vim.api.nvim_command('set exrc')
+vim.api.nvim_command('set splitright')
+vim.api.nvim_command('set splitbelow')
+vim.api.nvim_command('set foldlevelstart=99')
 
 -- custom icons
 vim.diagnostic.config({
