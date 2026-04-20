@@ -13,7 +13,11 @@ return {
             load = {
                 ['core.defaults'] = {},
                 ['core.concealer'] = {},
-                ['core.summary'] = {},
+                ['core.summary'] = {
+                    config = {
+                        strategy = "by_path",
+                    }
+                },
                 ['core.dirman'] = {
                     config = {
                         workspaces = {

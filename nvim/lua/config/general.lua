@@ -7,6 +7,8 @@ vim.api.nvim_command('set exrc')
 vim.api.nvim_command('set splitright')
 vim.api.nvim_command('set splitbelow')
 vim.api.nvim_command('set foldlevelstart=99')
+vim.api.nvim_command('set conceallevel=2')
+vim.api.nvim_command('set concealcursor=nc')
 
 -- custom icons
 vim.diagnostic.config({
