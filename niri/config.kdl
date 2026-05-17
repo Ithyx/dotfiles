@@ -565,9 +565,14 @@ binds {
     // XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
     XF86AudioMute { spawn-sh "playerctl play-pause"; }
+    XF86AudioPlay { spawn-sh "playerctl play-pause"; }
+    XF86AudioPause { spawn-sh "playerctl play-pause"; }
+    XF86AudioNext { spawn-sh "playerctl next"; }
+    XF86AudioPrev { spawn-sh "playerctl previous"; }
     XF86AudioLowerVolume { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ -5%"; }
     XF86AudioRaiseVolume { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ +5%"; }
     Shift+XF86AudioMute { spawn-sh "playerctl --player=spotify,mpd,ncspot play-pause"; }
+    Shift+XF86AudioPlay { spawn-sh "playerctl --player=spotify,mpd,ncspot play-pause"; }
     Shift+XF86AudioLowerVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot position 5-"; }
     Shift+XF86AudioRaiseVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot position 5+"; }
     Ctrl+XF86AudioLowerVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot previous"; }
