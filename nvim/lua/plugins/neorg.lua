@@ -7,6 +7,7 @@ return {
         dependencies = {
             'nvim-neorg/tree-sitter-norg',
             'nvim-neorg/tree-sitter-norg-meta',
+            "3rd/image.nvim",
         },
 
         opts = {
@@ -28,7 +29,19 @@ return {
                         default_workspace = 'main',
                     },
                 },
+                ['core.esupports.metagen'] = {
+                    config = {
+                        author = "ithyx"
+                    }
+                }
             },
         },
+    },
+    {
+        "3rd/image.nvim",
+        build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+        opts = {
+            processor = "magick_cli",
+        }
     }
 }
