@@ -14,8 +14,8 @@ end
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-# cargo
-source "$HOME/.cargo/env.fish"
-
 # opencode
 fish_add_path /home/ithyx/.opencode/bin
+
+# uv
+fish_add_path "/home/ithyx/.local/bin"
