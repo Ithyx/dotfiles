@@ -3,6 +3,10 @@
 // Check the wiki for a full description of the configuration:
 // https://yalter.github.io/niri/Configuration:-Introduction
 
+xwayland-satellite {
+    path "/home/ithyx/tools/xwayland-satellite/target/release/xwayland-satellite"
+}
+
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
@@ -77,68 +81,29 @@ cursor {
 environment {
     EDITOR "nvim"
     QT_QPA_PLATFORMTHEME "qt6ct"
+    _JAVA_AWT_WM_NONREPARENTING "1"
 }
 
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
-/-output "eDP-1" {
-    // Uncomment this line to disable this output.
-    // off
 
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@120.030"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=1280 y=0
-}
-
-output "eDP-2" {
-    mode "2560x1600@165.000"
-    scale 1.33
+output "DP-1" {
+    // mode "2560x1440@279.961"
+    mode "2560x1440@239.901"
+    scale 1
 
     transform "normal"
+    // variable-refresh-rate on-demand=true
+    position x=0 y=0
 }
 
-output "HDMI-A-1" {
+output "HDMI-A-2" {
     // mode "2560x1440@119.998"
-    mode "3840x2160@119.880"
+    mode "3840x2160@60.000"
     scale 1.5
 
-    variable-refresh-rate on-demand=true
+    position x=2560 y=0
 }
-
-// output "DP-1" {
-//     mode "2560x1440"
-//     position x=0 y=0
-// }
-// output "DP-3" {
-//     mode "2560x1440@164.835"
-//     position x=2560 y=0
-// }
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -315,13 +280,14 @@ layout {
 // spawn-sh-at-startup "wl-paste --type text --watch cliphist store #Stores only text data"
 // spawn-sh-at-startup "wl-paste --type image --watch cliphist store #Stores only image data"
 
-spawn-sh-at-startup "qs -c noctalia-shell"
+spawn-at-startup "noctalia"
+spawn-sh-at-startup "setxkbmap ca"
 
 spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 spawn-at-startup "swayidle"
 
-spawn-sh-at-startup "mkdir /tmp/manga_ocr"
-spawn-sh-at-startup "manga_ocr /tmp/manga_ocr"
+spawn-sh-at-startup "mkdir /tmp/owocr"
+spawn-sh-at-startup "owocr"
 
 spawn-at-startup "thunderbird"
 spawn-at-startup "vesktop"
@@ -330,7 +296,7 @@ spawn-at-startup "spotify"
 spawn-sh-at-startup "flatpak run com.spotify.Client"
 
 spawn-at-startup "zen-browser"
-spawn-at-startup "steam"
+spawn-sh-at-startup "gtk-launch steam"
 
 spawn-at-startup "niri" "msg" "action" "focus-workspace" "browser"
 
@@ -388,61 +354,11 @@ window-rule {
     open-floating true
 }
 
-// Dual monitor setup
-// workspace "browser" {
-//     open-on-output "DP-3"
-// }
-// window-rule {
-//     match app-id="zen|firefox"
-// 
-//     open-on-workspace "browser"
-//     open-maximized true
-// }
-
-// workspace "games" {
-//     open-on-output "DP-3"
-// }
-// window-rule {
-//     match app-id="steam"
-// 
-//     open-on-workspace "games"
-// }
-// window-rule {
-//     match app-id="steam" title="Steam"
-// 
-//     default-column-width { proportion 0.66667; }
-// }
-// window-rule {
-//     match app-id="steam" title="フレンドリスト"
-// 
-//     default-column-width { proportion 0.33333; }
-// }
-
-// workspace "mail" {
-//     open-on-output "DP-1"
-// }
-// window-rule {
-//     match app-id="thunderbird"
-// 
-//     open-on-workspace "mail"
-//     open-maximized true
-// }
-// 
-// workspace "chat" {
-//     open-on-output "DP-1"
-// }
-// window-rule {
-//     match app-id="Spotify"
-//     match app-id="vesktop"
-// 
-//     open-on-workspace "chat"
-// }
-
-// Single monitor setup
 workspace "browser" {
+    open-on-output "DP-1"
 }
 window-rule {
-    match app-id="zen|firefox|google-chrome"
+    match app-id="zen|firefox|google-chrome" at-startup=true
 
     open-on-workspace "browser"
     open-maximized-to-edges true
@@ -454,6 +370,7 @@ window-rule {
 }
 
 workspace "games" {
+    open-on-output "DP-1"
 }
 window-rule {
     match app-id="steam"
@@ -475,13 +392,7 @@ window-rule {
 }
 
 workspace "comms" {
-}
-window-rule {
-    match app-id="thunderbird"
-    match app-id="org.mozilla.Thunderbird"
-
-    open-on-workspace "comms"
-    default-column-width { proportion 0.66667; }
+    open-on-output "HDMI-A-2"
 }
 window-rule {
     match app-id="spotify|Spotify"
@@ -491,11 +402,28 @@ window-rule {
     default-column-width { proportion 0.5; }
 }
 
+workspace "mail" {
+    open-on-output "HDMI-A-2"
+}
+window-rule {
+    match app-id="thunderbird"
+    match app-id="org.mozilla.Thunderbird"
+
+    open-on-workspace "mail"
+    open-maximized-to-edges true
+}
+window-rule {
+    match app-id="org.kde.korganizer"
+
+    open-on-workspace "mail"
+}
+
 /// GAMES
 window-rule {
     // match app-id="^mpv$"
     match app-id="^steam_app_252950$" // rocket league
-    match app-id="^ffxiv_dx11.exe$"
+    // match app-id="steam_app_3159330" // AC Shadows
+    // match app-id="^ffxiv_dx11.exe$"
 
     variable-refresh-rate true
 }
@@ -521,11 +449,31 @@ window-rule {
 
 // noctalia
 layer-rule {
-  match namespace="^noctalia-overview*"
+  match namespace="^noctalia-backdrop"
   place-within-backdrop true
 }
 debug {
     honor-xdg-activation-with-invalid-serial
+}
+
+// Make top and overlay layers use the regular blur (if enabled),
+// while bottom and background layers keep using the efficient xray blur.
+layer-rule {
+    match layer="top"
+    match layer="overlay"
+
+    background-effect {
+        xray false
+    }
+}
+
+// Enable blur behind the fuzzel launcher.
+layer-rule {
+    match namespace="^launcher$"
+
+    background-effect {
+        blur true
+    }
 }
 
 binds {
@@ -571,12 +519,11 @@ binds {
     XF86AudioPrev { spawn-sh "playerctl previous"; }
     XF86AudioLowerVolume { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ -5%"; }
     XF86AudioRaiseVolume { spawn-sh "pactl set-sink-volume @DEFAULT_SINK@ +5%"; }
-    Shift+XF86AudioMute { spawn-sh "playerctl --player=spotify,mpd,ncspot play-pause"; }
-    Shift+XF86AudioPlay { spawn-sh "playerctl --player=spotify,mpd,ncspot play-pause"; }
-    Shift+XF86AudioLowerVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot position 5-"; }
-    Shift+XF86AudioRaiseVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot position 5+"; }
-    Ctrl+XF86AudioLowerVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot previous"; }
-    Ctrl+XF86AudioRaiseVolume { spawn-sh "playerctl --player=spotify,mpd,ncspot next"; }
+    Shift+XF86AudioMute { spawn-sh "playerctl --player=qobine,spotify play-pause"; }
+    Shift+XF86AudioLowerVolume { spawn-sh "playerctl --player=qobine,spotify position 5-"; }
+    Shift+XF86AudioRaiseVolume { spawn-sh "playerctl --player=qobine,spotify position 5+"; }
+    Ctrl+XF86AudioLowerVolume { spawn-sh "playerctl --player=qobine,spotify previous"; }
+    Ctrl+XF86AudioRaiseVolume { spawn-sh "playerctl --player=qobine,spotify next"; }
     Mod+XF86AudioLowerVolume { focus-workspace-down; }
     Mod+XF86AudioRaiseVolume { focus-workspace-up; }
 
@@ -804,7 +751,9 @@ binds {
 
     // Translation helpers
     // Mod+Shift+T { spawn-sh "fish $HOME/.local/bin/jp_ocr.fish"; }
-    Mod+Shift+T { spawn-sh "slurp | grim -g - - | tee /tmp/manga_ocr/$(date +%s).png"; }
+    // Mod+Shift+T { spawn-sh "slurp | grim -g - - | tee /tmp/manga_ocr/$(date +%s).png"; }
+    Mod+Shift+T { spawn-sh "slurp | grim -g - - | tee /tmp/owocr/$(date +%s).png"; }
+    Mod+T { spawn-sh "zen-browser --blank-window jpdb.io"; }
 
     Mod+C { spawn-sh "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"; }
 
@@ -836,3 +785,6 @@ gestures {
 recent-windows {
     off
 }
+
+
+include "noctalia.kdl"
